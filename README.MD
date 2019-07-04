@@ -29,7 +29,7 @@ Configuration can be overridden with env vars. Just export them in your bash pro
 
 | Env Var        | Default     | Description                                                                  |
 |----------------|-------------|------------------------------------------------------------------------------|
-| WORKSPACE_PATH | ~/workspace | The root directory for your workspace, where all your project files are kept |
+| WORKSPACE_PATH | ~/ | The root directory for your workspace, where all your project files are kept |
 
 
 
