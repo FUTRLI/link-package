@@ -4,7 +4,16 @@ This is just a simple little tool for work, it is heavily dependent on our git r
 
 ## Installation
 
+This tool can be installed using homebrew.
+
+* `brew tap lifeglug/formulae`
+* `brew install link-package`
+
+## Manual Installation
+
 This has no dependencies as it is a simple bash script. You can either download `./bin/link-package` and make sure it's set to be executable and put it in your `/usr/local/bin` folder, or similar.
+
+###
 
 ## Usage
 
