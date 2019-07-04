@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if [ $# -eq 0 ]; then
+    echo "You must provide an argument for the package you wish to link"
+    exit 1
+fi
+
+WORKSPACE_PATH=${WORKSPACE_PATH:-~}
+PKG=${PKG_PATH}/${1}
+
+(cd ${PKG}/frontend && npm run build && cd dist && npm pack)
+TARBALL=$(ls ${PKG}/frontend/dist/*.tgz)
+echo "Installing ${TARBALL}"
+npm i ${TARBALL}
