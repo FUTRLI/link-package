@@ -23,6 +23,10 @@ What this does is look into your workspace folder (~/workspace as default) for a
 
 After all this, it will `npm i` the built tarball in your current directory.
 
+### Secret hack
+
+If you call this using `shared-services` then it will omit the frontend folder in the path. It's a hack, cool, yeah?
+
 ## Configuration
 
 Configuration can be overridden with env vars. Just export them in your bash profile, or however you want to deal with them.

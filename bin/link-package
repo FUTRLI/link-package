@@ -8,9 +8,13 @@ if [ $# -eq 0 ]; then
 fi
 
 PKG_PATH=${WORKSPACE_PATH:-~}
-PKG=${PKG_PATH}/${1}
+PKG=${PKG_PATH}/${1}/frontend
 
-(cd ${PKG}/frontend && npm run build && cd dist && npm pack)
-TARBALL=$(ls ${PKG}/frontend/dist/*.tgz)
+if [ $1 == "shared-services" ]; then
+    PKG=${PKG_PATH}/${1}
+fi
+
+(cd ${PKG} && npm run build && cd dist && npm pack)
+TARBALL=$(ls ${PKG}/dist/*.tgz)
 echo "Installing ${TARBALL}"
 npm i ${TARBALL}
