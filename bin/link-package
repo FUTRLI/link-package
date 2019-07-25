@@ -7,14 +7,23 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
-PKG_PATH=${WORKSPACE_PATH:-~}
-PKG=${PKG_PATH}/${1}/frontend
+PKG_PATH=${LINK_PACKAGE_WORKSPACE:-~}
+SUBFOLDER=${LINK_PACKAGE_SUBFOLDER:-frontend}
+DIST_FOLDER=${LINK_PACKAGE_DIST:-dist}
+BUILD_COMMAND=${LINK_PACKAGE_COMMAND:-"npm run build"}
 
-if [ $1 == "shared-services" ]; then
+if [ -f "${PKG_PATH}/${1}/package.json" ]; then
     PKG=${PKG_PATH}/${1}
+    echo "package.json found at root: ${PKG}"
+elif [ -f "${PKG_PATH}/${1}/${SUBFOLDER}/package.json" ]; then
+    PKG=${PKG_PATH}/${1}/${SUBFOLDER}
+    echo "package.json found in '${SUBFOLDER}' subfolder: ${PKG}"
+else
+    echo "package.json not found in either root of ${PKG_PATH}/${1} or ${PKG_PATH}/${1}/frontend"
+    exit 1
 fi
 
-(cd ${PKG} && npm run build && cd dist && npm pack)
-TARBALL=$(ls ${PKG}/dist/*.tgz)
+(cd ${PKG} && ${BUILD_COMMAND} && cd ${DIST_FOLDER} && npm pack)
+TARBALL=$(ls ${PKG}/${DIST_FOLDER}/*.tgz)
 echo "Installing ${TARBALL}"
 npm i ${TARBALL}
