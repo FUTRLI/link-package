@@ -7,23 +7,19 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
-PKG_PATH=${LINK_PACKAGE_WORKSPACE:-~}
-SUBFOLDER=${LINK_PACKAGE_SUBFOLDER:-frontend}
-DIST_FOLDER=${LINK_PACKAGE_DIST:-dist}
-BUILD_COMMAND=${LINK_PACKAGE_COMMAND:-"npm run build"}
+PACKAGE=${1}
+MONOREPO_ROOT=${LINK_PACKAGE_ROOT:-~/workspace/frontend-platform}
+DIST_FOLDER=${MONOREPO_ROOT}/packages/${PACKAGE}/build
+BUILD_COMMAND=${LINK_PACKAGE_COMMAND:-"yarn build"}
 
-if [ -f "${PKG_PATH}/${1}/package.json" ]; then
-    PKG=${PKG_PATH}/${1}
-    echo "package.json found at root: ${PKG}"
-elif [ -f "${PKG_PATH}/${1}/${SUBFOLDER}/package.json" ]; then
-    PKG=${PKG_PATH}/${1}/${SUBFOLDER}
-    echo "package.json found in '${SUBFOLDER}' subfolder: ${PKG}"
+if [ -f "${MONOREPO_ROOT}/packages/${PACKAGE}/package.json" ]; then
+    echo "package.json found for ${PACKAGE}"
 else
-    echo "package.json not found in either root of ${PKG_PATH}/${1} or ${PKG_PATH}/${1}/frontend"
+    echo "package.json not found in ${MONOREPO_ROOT}/packages/${PACKAGE}!"
     exit 1
 fi
 
-(cd ${PKG} && ${BUILD_COMMAND} && cd ${DIST_FOLDER} && npm pack)
-TARBALL=$(ls ${PKG}/${DIST_FOLDER}/*.tgz)
+(cd ${MONOREPO_ROOT} && ${BUILD_COMMAND} && cd ${DIST_FOLDER} && npm pack)
+TARBALL=$(ls ${DIST_FOLDER}/*.tgz)
 echo "Installing ${TARBALL}"
 npm i ${TARBALL}

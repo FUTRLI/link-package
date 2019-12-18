@@ -19,7 +19,7 @@ This has no dependencies as it is a simple bash script. You can either download 
 
 Simply call `link-package <package-name>` such as `link-package shared-services`.
 
-What this does is look into your workspace folder (~/workspace as default) for a folder named `shared-services`, and from there it will see if the package.json exists within the root folder, or the `frontend` subfolder, call `npm run build` in the frontend subdirectory, then `npm pack` in the built `dist` folder.
+What this does is look into your monorepo folder (~/workspace/frontend-platform as default) and checks if the package exists in ${MONOREPO_ROOT}/packages/${PACKAGE_NAME}. It will then call the `yarn build` command on the monorepo, then drill down into the specified package and creates a tarball in the build folder.
 
 Each of these paths and commands above can be customised via the env vars below.
 
@@ -31,10 +31,6 @@ Configuration can be overridden with env vars. Just export them in your bash pro
 
 | Env Var | Default | Description |
 |-|-|-|
-| LINK_PACKAGE_WORKSPACE | ~/ | The root directory for your workspace, where all your project files are kept |
-| LINK_PACKAGE_SUBFOLDER | "frontend" | The subfolder where package.json is contained |
-| LINK_PACKAGE_DIST | "dist" | The folder where the distributable is built to. |
-| LINK_PACKAGE_COMMAND | "npm run build" | The command which is run in the project to produce the distributable |
-
-
+| LINK_PACKAGE_ROOT | ~/workspace/frontend-platform | The root directory for our monorepo |
+| LINK_PACKAGE_COMMAND | "yarn build" | The command which is run in the project to produce the distributable |
 
