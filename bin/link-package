@@ -29,6 +29,14 @@ create_tarballs() {
     TARBALL_LIST="${TARBALL_LIST} ${TARBALL}"
 }
 
+
+OLD_TARBALLS=$(find ${MONOREPO_ROOT}/packages/ -name "*.tgz" -not -path "node_modules")
+
+if [ -n "${OLD_TARBALLS}" ]; then
+    echo "Clean up old tarballs"
+    (rm ${MONOREPO_ROOT}/packages/**/build/*.tgz)
+fi
+
 echo "Building monorepo"
 (cd ${MONOREPO_ROOT} && ${BUILD_COMMAND})
 

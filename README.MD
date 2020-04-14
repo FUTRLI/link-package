@@ -32,4 +32,4 @@ Configuration can be overridden with env vars. Just export them in your bash pro
 | Env Var              | Default                       | Description                                                          |
 | -------------------- | ----------------------------- | -------------------------------------------------------------------- |
 | LINK_PACKAGE_ROOT    | ~/workspace/frontend-platform | The root directory for our monorepo                                  |
-| LINK_PACKAGE_COMMAND | "yarn build"                  | The command which is run in the project to produce the distributable |
+| LINK_PACKAGE_COMMAND | "yarn build-quick"            | The command which is run in the project to produce the distributable |
